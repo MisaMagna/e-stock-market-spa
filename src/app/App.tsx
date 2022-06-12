@@ -1,9 +1,14 @@
-import { FC} from 'react';
+import { FC } from 'react';
+import CompanyListView from '../view/CompanyListView';
 import './App.css';
 
 const App: FC = () => {
   return (
-    <h1>Hello World</h1>
+    <div>
+      <h1>E-Stock Market App</h1>
+      <CompanyListView></CompanyListView>
+    </div>
+
   );
 }
 

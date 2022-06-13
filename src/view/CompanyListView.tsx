@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { Company } from "../model/Company";
 import { COMPANY_DATA } from "../mock/Data";
 import { Stock } from "../model/Stock";
+import DatePicker from "../components/DatePicker";
 
 const CompanyListView: FC = () => {
 
@@ -29,16 +30,17 @@ const CompanyListView: FC = () => {
                             <AccordionDetails>
                                 <Stack spacing={3}>
                                     <Stack width={"50%"} direction={"row"} justifyContent={"space-between"} >
-                                        <Stack direction={"row"}>
+                                        <DatePicker></DatePicker>
+                                        <DatePicker></DatePicker>
+                                        {/* <Stack direction={"row"}>
                                             <Typography paddingRight={"1rem"}>From</Typography>
-                                            {/* // TODO: PROVIDE A GOOD LOKING DATE PICKER */}
-                                            <input type="date" />
+                                            <input type="date" className="date-picker"/>
                                         </Stack>
                                         <Stack direction={"row"}>
                                             <Typography paddingRight={"1rem"}>To</Typography>
-                                            {/* // TODO: PROVIDE A GOOD LOKING DATE PICKER */}
+                                            
                                             <input type="date" />
-                                        </Stack>
+                                        </Stack> */}
                                     </Stack>
                                     <TableContainer>
                                         <Table>

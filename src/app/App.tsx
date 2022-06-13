@@ -1,13 +1,13 @@
 import { FC } from 'react';
+import Layout from '../components/Layout';
 import CompanyListView from '../view/CompanyListView';
 import './App.css';
 
 const App: FC = () => {
   return (
-    <div>
-      <h1>E-Stock Market App</h1>
-      <CompanyListView></CompanyListView>
-    </div>
+    <Layout>
+      <CompanyListView />
+    </Layout>
 
   );
 }

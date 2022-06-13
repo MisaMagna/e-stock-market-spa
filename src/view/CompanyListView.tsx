@@ -21,10 +21,7 @@ const CompanyListView: FC = () => {
                 <Stack spacing={2}>
                     {companies.map((company: Company) => (
                         <Accordion key={company.code}>
-                            <AccordionSummary
-                            /* TODO: INSTALL ICONS */
-                            /* expandIcon={<ExpandMoreIcon />} */
-                            >
+                            <AccordionSummary>
                                 <Typography paddingRight={"2rem"}>{company.code}</Typography>
                                 <Typography fontStyle={"italic"}>{company.name}</Typography>
                             </AccordionSummary>

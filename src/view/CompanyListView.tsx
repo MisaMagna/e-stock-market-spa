@@ -14,7 +14,6 @@ const CompanyListView: FC = () => {
         setCompanies(companies);
     }, []);
 
-    // TODO: CAMBIAR A SX
     const StockRow = (stock: Stock) => (
         <TableRow key={stock.price}>
             <TableCell>{stock.price}</TableCell>
@@ -43,17 +42,17 @@ const CompanyListView: FC = () => {
     const CompanyAccordion = (company: Company) => (
         <Accordion key={company.code}>
             <AccordionSummary>
-                <Typography paddingRight={"2rem"}>{company.code}</Typography>
-                <Typography fontStyle={"italic"}>{company.name}</Typography>
+                <Typography sx={{ pr: 4 }}>{company.code}</Typography>
+                <Typography sx={{ fontStyle: "italic" }}>{company.name}</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 <Stack spacing={3}>
-                    <Stack width={"50%"} direction={"row"} justifyContent={"space-between"} >
-                        <DatePicker />
+                    <Stack direction={"row"}>
+                        <DatePicker sx={{ mr: 4 }} />
                         <DatePicker />
                     </Stack>
                     {StocksTable(company.stocks)}
-                    <Stack width={"25%"} spacing={2}>
+                    <Stack spacing={2} sx={{ width: "25%" }}>
                         <TextField label="Min" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
                         <TextField label="Max" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
                         <TextField label="Average" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
@@ -67,7 +66,7 @@ const CompanyListView: FC = () => {
         <Box>
             <Stack spacing={3}>
                 <Box sx={{ my: 3 }}>
-                    <Typography fontSize={24}>Companies</Typography>
+                    <Typography sx={{ fontSize: "h4.fontSize" }}>Companies</Typography>
                 </Box>
                 <Stack spacing={2}>
                     {companies.map(CompanyAccordion)}

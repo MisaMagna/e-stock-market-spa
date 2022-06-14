@@ -1,10 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box, SxProps, Typography } from "@mui/material";
 import { FC } from "react";
 import './DatePicker.css';
 
-const DatePicker: FC = () => {
+interface DatePickerProps {
+    sx?: SxProps;
+}
+
+const DatePicker: FC<DatePickerProps> = ({sx}) => {
     return (
-        <Box>
+        <Box sx={sx}>
             <Typography 
                 fontSize={12}
                 fontWeight={300}

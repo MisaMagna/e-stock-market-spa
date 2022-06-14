@@ -5,7 +5,6 @@ import './App.css';
 
 const App: FC = () => {
 
-  // TODO: CAMBIAR A SX
   const Layout = (children: JSX.Element) => (
     <>
       <AppBar position="relative">

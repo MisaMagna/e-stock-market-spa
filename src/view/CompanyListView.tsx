@@ -14,6 +14,55 @@ const CompanyListView: FC = () => {
         setCompanies(companies);
     }, []);
 
+    // TODO: CAMBIAR A SX
+    const StockRow = (stock: Stock) => (
+        <TableRow key={stock.price}>
+            <TableCell>{stock.price}</TableCell>
+            <TableCell>{stock.date.toLocaleDateString()}</TableCell>
+            <TableCell>{stock.time.toLocaleTimeString()}</TableCell>
+        </TableRow>
+    )
+
+    const StocksTable = (stocks: Stock[]) => (
+        <TableContainer>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Stock Price</TableCell>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Time</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {stocks.map(StockRow)}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+
+    const CompanyAccordion = (company: Company) => (
+        <Accordion key={company.code}>
+            <AccordionSummary>
+                <Typography paddingRight={"2rem"}>{company.code}</Typography>
+                <Typography fontStyle={"italic"}>{company.name}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <Stack spacing={3}>
+                    <Stack width={"50%"} direction={"row"} justifyContent={"space-between"} >
+                        <DatePicker />
+                        <DatePicker />
+                    </Stack>
+                    {StocksTable(company.stocks)}
+                    <Stack width={"25%"} spacing={2}>
+                        <TextField label="Min" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
+                        <TextField label="Max" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
+                        <TextField label="Average" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
+                    </Stack>
+                </Stack>
+            </AccordionDetails>
+        </Accordion>
+    )
+
     return (
         <Box>
             <Stack spacing={3}>
@@ -21,56 +70,7 @@ const CompanyListView: FC = () => {
                     <Typography fontSize={24}>Companies</Typography>
                 </Box>
                 <Stack spacing={2}>
-                    {companies.map((company: Company) => (
-                        <Accordion key={company.code}>
-                            <AccordionSummary>
-                                <Typography paddingRight={"2rem"}>{company.code}</Typography>
-                                <Typography fontStyle={"italic"}>{company.name}</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Stack spacing={3}>
-                                    <Stack width={"50%"} direction={"row"} justifyContent={"space-between"} >
-                                        <DatePicker></DatePicker>
-                                        <DatePicker></DatePicker>
-                                        {/* <Stack direction={"row"}>
-                                            <Typography paddingRight={"1rem"}>From</Typography>
-                                            <input type="date" className="date-picker"/>
-                                        </Stack>
-                                        <Stack direction={"row"}>
-                                            <Typography paddingRight={"1rem"}>To</Typography>
-                                            
-                                            <input type="date" />
-                                        </Stack> */}
-                                    </Stack>
-                                    <TableContainer>
-                                        <Table>
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>Stock Price</TableCell>
-                                                    <TableCell>Date</TableCell>
-                                                    <TableCell>Time</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {company.stocks.map((stock: Stock) => (
-                                                    <TableRow key={stock.price}>
-                                                        <TableCell>{stock.price}</TableCell>
-                                                        <TableCell>{stock.date.toLocaleDateString()}</TableCell>
-                                                        <TableCell>{stock.time.toLocaleTimeString()}</TableCell>
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                    <Stack width={"25%"} spacing={2}>
-                                        <TextField label="Min" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                                        <TextField label="Max" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                                        <TextField label="Average" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                                    </Stack>
-                                </Stack>
-                            </AccordionDetails>
-                        </Accordion>
-                    ))}
+                    {companies.map(CompanyAccordion)}
                 </Stack>
             </Stack>
         </Box>

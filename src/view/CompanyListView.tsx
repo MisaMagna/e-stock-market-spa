@@ -45,28 +45,39 @@ const CompanyListView: FC = () => {
         </TableContainer>
     )
 
-    const CompanyAccordion = (company: Company) => (
-        <Accordion key={company.code}>
-            <AccordionSummary>
-                <Typography sx={{ pr: 4 }}>{company.code}</Typography>
-                <Typography sx={{ fontStyle: "italic" }}>{company.name}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <Stack spacing={3}>
-                    <Stack direction={"row"}>
-                        <DatePicker sx={{ mr: 4 }} />
-                        <DatePicker />
+    const CompanyAccordion = (company: Company) => {
+        const FIRST_PRICE = company.stocks.length ? company.stocks[0].price : 0;
+        let [min, max, average]: number[] = [FIRST_PRICE, FIRST_PRICE, 0];
+
+        for (const stock of company.stocks) {
+            const price: number = stock.price;
+            min = price <= min ? price : min;
+            max = price >= max ? price : max;
+            average += price / company.stocks.length;
+        }
+
+        return (
+            <Accordion key={company.code}>
+                <AccordionSummary>
+                    <Typography sx={{ pr: 4 }}>{company.code}</Typography>
+                    <Typography sx={{ fontStyle: "italic" }}>{company.name}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Stack spacing={3}>
+                        <Stack direction={"row"}>
+                            <DatePicker sx={{ mr: 4 }} />
+                            <DatePicker />
+                        </Stack>
+                        {StocksTable(company.stocks)}
+                        <Stack spacing={2} sx={{ width: "25%" }}>
+                            <TextField value={min} label="Min" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
+                            <TextField value={max} label="Max" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
+                            <TextField value={average} label="Average" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
+                        </Stack>
                     </Stack>
-                    {StocksTable(company.stocks)}
-                    <Stack spacing={2} sx={{ width: "25%" }}>
-                        <TextField label="Min" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                        <TextField label="Max" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                        <TextField label="Average" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                    </Stack>
-                </Stack>
-            </AccordionDetails>
-        </Accordion>
-    )
+                </AccordionDetails>
+            </Accordion>)
+    }
 
     return (
         <Box>

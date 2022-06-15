@@ -1,24 +1,30 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { Company } from "../model/Company";
-import { COMPANY_DATA } from "../mock/Data";
 import { Stock } from "../model/Stock";
 import DatePicker from "../components/DatePicker";
+import { AxiosResponse } from "axios";
+import { getCompanies } from "../service/CompanyService";
 
 const CompanyListView: FC = () => {
 
     const [companies, setCompanies] = useState<Company[]>([]);
 
     useEffect(() => {
-        const companies: Company[] = COMPANY_DATA;
-        setCompanies(companies);
+        const data = async () => {
+            const response: AxiosResponse<Company[]> = await getCompanies();
+            console.log(response);
+            setCompanies(response.data);
+        }
+
+        data();
     }, []);
 
     const StockRow = (stock: Stock) => (
         <TableRow key={stock.price}>
             <TableCell>{stock.price}</TableCell>
-            <TableCell>{stock.date.toLocaleDateString()}</TableCell>
-            <TableCell>{stock.time.toLocaleTimeString()}</TableCell>
+            <TableCell>{stock.date.toString()}</TableCell>
+            <TableCell>{stock.time.toString()}</TableCell>
         </TableRow>
     )
 

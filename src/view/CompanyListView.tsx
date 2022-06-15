@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { Company } from "../model/Company";
 import { COMPANY_DATA } from "../mock/Data";
@@ -65,9 +65,13 @@ const CompanyListView: FC = () => {
     return (
         <Box>
             <Stack spacing={3}>
-                <Box sx={{ my: 3 }}>
+                <Stack direction="row" sx={{ my: 3, justifyContent: "space-between", alignItems: "center" }}>
                     <Typography sx={{ fontSize: "h4.fontSize" }}>Companies</Typography>
-                </Box>
+                    <Box>
+                        <TextField type="search" size="small" label="Company id" />
+                        <Button variant="contained" sx={{ ml: 3, top: 1 }}>Search</Button>
+                    </Box>
+                </Stack>
                 <Stack spacing={2}>
                     {companies.map(CompanyAccordion)}
                 </Stack>

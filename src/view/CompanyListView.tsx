@@ -70,9 +70,9 @@ const CompanyListView: FC = () => {
                         </Stack>
                         {StocksTable(company.stocks)}
                         <Stack spacing={2} sx={{ width: "25%" }}>
-                            <TextField value={min} label="Min" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                            <TextField value={max} label="Max" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
-                            <TextField value={average} label="Average" variant="filled" size="small" defaultValue={0} InputProps={{ readOnly: true }}></TextField>
+                            <TextField value={min} label="Min" variant="filled" size="small" InputProps={{ readOnly: true }}></TextField>
+                            <TextField value={max} label="Max" variant="filled" size="small" InputProps={{ readOnly: true }}></TextField>
+                            <TextField value={average} label="Average" variant="filled" size="small" InputProps={{ readOnly: true }}></TextField>
                         </Stack>
                     </Stack>
                 </AccordionDetails>

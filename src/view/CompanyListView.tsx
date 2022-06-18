@@ -2,7 +2,6 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Stack, Tabl
 import { FC, useEffect, useState } from "react";
 import { Company } from "../model/Company";
 import { Stock } from "../model/Stock";
-import DatePicker from "../components/DatePicker";
 import { AxiosResponse } from "axios";
 import { getCompanies } from "../service/CompanyService";
 
@@ -46,6 +45,8 @@ const CompanyListView: FC = () => {
     )
 
     const CompanyAccordion = (company: Company) => {
+        const defaultDate = new Date().toISOString().slice(0, 10);
+
         const FIRST_PRICE = company.stocks.length ? company.stocks[0].price : 0;
         let [min, max, average]: number[] = [FIRST_PRICE, FIRST_PRICE, 0];
 
@@ -64,10 +65,11 @@ const CompanyListView: FC = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Stack spacing={3}>
-                        <Stack direction={"row"}>
-                            <DatePicker sx={{ mr: 4 }} />
-                            <DatePicker />
-                        </Stack>
+                        <Box>
+                            <TextField type="date" size="small" label="From" defaultValue={defaultDate} sx={{ mr: 4 }} />
+                            <TextField type="date" size="small" label="To" defaultValue={defaultDate} sx={{ mr: 4 }} />
+                            <Button variant="contained">Search</Button>
+                        </Box>
                         {StocksTable(company.stocks)}
                         <Stack spacing={2} sx={{ width: "25%" }}>
                             <TextField value={min} label="Min" variant="filled" size="small" InputProps={{ readOnly: true }}></TextField>

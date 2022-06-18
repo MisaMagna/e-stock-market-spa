@@ -1,13 +1,14 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Company } from "../model/Company";
-import { AxiosResponse } from "axios";
-import { getCompanies } from "../service/CompanyService";
+import { AxiosError, AxiosResponse } from "axios";
+import { getCompanies, getCompany } from "../service/CompanyService";
 import CompanyAccordion from "../components/CompanyAccordion";
 
 const CompanyListView: FC = () => {
 
     const [companies, setCompanies] = useState<Company[]>([]);
+    const searchRef = useRef<HTMLInputElement>(document.createElement("input"));
 
     useEffect(() => {
         const fetchCompanies = async () => {
@@ -19,14 +20,30 @@ const CompanyListView: FC = () => {
         fetchCompanies();
     }, []);
 
+
+    const onCompanySearch = () => {
+        const fetchCompany = async () => {
+            const companyCode: string = searchRef.current.value;
+            try {
+                const response: AxiosResponse<Company> = await getCompany(companyCode);
+                setCompanies([response.data]);
+            } catch (error) {
+                const axiosError = error as AxiosError;
+                console.error(axiosError.response?.data);
+            }
+        }
+
+        fetchCompany();
+    }
+
     return (
         <Box>
             <Stack spacing={3}>
                 <Stack direction="row" sx={{ my: 3, justifyContent: "space-between", alignItems: "center" }}>
                     <Typography sx={{ fontSize: "h4.fontSize" }}>Companies</Typography>
                     <Box>
-                        <TextField type="search" size="small" label="Company id" />
-                        <Button variant="contained" sx={{ ml: 3, top: 1 }}>Search</Button>
+                        <TextField inputRef={searchRef} type="search" size="small" label="Company id" />
+                        <Button variant="contained" onClick={onCompanySearch} sx={{ ml: 3, top: 1 }}>Search</Button>
                     </Box>
                 </Stack>
                 <Stack spacing={2}>

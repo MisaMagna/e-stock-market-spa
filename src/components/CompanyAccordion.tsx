@@ -18,6 +18,7 @@ interface Metrics {
 }
 
 const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName, stocks }) => {
+
     const defaultDate = new Date().toISOString().slice(0, 10);
 
     const [currentStocks, setCurrentStocks] = useState<Stock[]>(stocks);
@@ -45,7 +46,7 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
         console.log(companyCode);
         console.log(startDateRef.current.value);
         console.log(endDateRef.current.value);
-        
+
         const fetchStocks = async () => {
             const startDate: string = startDateRef.current.value;
             const endDate: string = endDateRef.current.value;

@@ -1,8 +1,23 @@
-import { Box, Button, Card, CardContent, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { FC } from "react"
+import { Controller, useForm } from "react-hook-form";
 import { StockExchange } from "../model/StockExchange";
 
+interface CompanyForm {
+    name: string,
+    CEO: string,
+    turnover: string,
+    website: string,
+    exchange: string
+}
+
 const AddCompanyView: FC = () => {
+
+    const { register, handleSubmit } = useForm<CompanyForm>();
+
+    const onCompanySubmit = (data: CompanyForm) => {
+        console.log(data);
+    }
 
     const StockEchangeOptions = Object
         .keys(StockExchange)
@@ -17,21 +32,18 @@ const AddCompanyView: FC = () => {
                 </Box>
                 <Card>
                     <CardContent>
-                        <Stack spacing={2}>
-                            <TextField variant="standard" label="Company Name" />
-                            <TextField variant="standard" label="CEO Name" />
-                            <TextField variant="standard" label="Turnover ($)" />
-                            <TextField variant="standard" label="Website" />
-                            <FormControl variant="standard" >
-                                <InputLabel id="stock-exchange-label">Stock Exchange</InputLabel>
-                                <Select labelId="stock-exchange-label" label="Stock Exchange" >
-                                    {StockEchangeOptions}
-                                </Select>
-                            </FormControl>
+                        <Stack spacing={2} component="form" onSubmit={handleSubmit(onCompanySubmit)}>
+                            <TextField {...register("name")} variant="standard" label="Company Name" />
+                            <TextField {...register("CEO")} variant="standard" label="CEO Name" />
+                            <TextField {...register("turnover")} variant="standard" label="Turnover (€)" />
+                            <TextField {...register("website")} variant="standard" label="Website" />
+                            <TextField {...register("exchange")} select variant="standard" label="Stock Exchange" defaultValue="">
+                                {StockEchangeOptions}
+                            </TextField>
                             <Stack direction="row" sx={{ justifyContent: "flex-end" }} >
                                 <Box sx={{ mt: 4 }}>
                                     <Button>Cancel</Button>
-                                    <Button variant="contained" sx={{ ml: 4 }}>Confirm</Button>
+                                    <Button type="submit" variant="contained" sx={{ ml: 4 }}>Confirm</Button>
                                 </Box>
                             </Stack>
                         </Stack>

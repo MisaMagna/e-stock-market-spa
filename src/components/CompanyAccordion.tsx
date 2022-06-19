@@ -35,7 +35,7 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
             const price: number = stock.price;
             min = price <= min ? price : min;
             max = price >= max ? price : max;
-            average += price / stocks.length;
+            average += price / currentStocks.length;
         }
 
         setMetrics({ min, max, average });

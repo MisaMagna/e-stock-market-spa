@@ -43,10 +43,6 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
 
 
     const onDateChange = (companyCode: string) => {
-        console.log(companyCode);
-        console.log(startDateRef.current.value);
-        console.log(endDateRef.current.value);
-
         const fetchStocks = async () => {
             const startDate: string = startDateRef.current.value;
             const endDate: string = endDateRef.current.value;

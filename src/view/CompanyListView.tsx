@@ -13,7 +13,6 @@ const CompanyListView: FC = () => {
     useEffect(() => {
         const fetchCompanies = async () => {
             const response: AxiosResponse<Company[]> = await getCompanies();
-            console.log(response);
             setCompanies(response.data);
         }
 

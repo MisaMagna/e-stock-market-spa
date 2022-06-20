@@ -21,7 +21,6 @@ const AddCompanyView: FC = () => {
     const navigate = useNavigate();
 
     const onCompanySubmit = (data: CompanyForm) => {
-        console.log(data);
         const fetchRegisterCompany = async () => {
             const detail: CompanyDetail = {
                 name: data.name,

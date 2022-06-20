@@ -1,11 +1,11 @@
-import { Box, Button, Card, CardContent, MenuItem, Stack, TextField, Typography } from "@mui/material";
-import { FC } from "react"
+import { Alert, Box, Button, Card, CardContent, MenuItem, Stack, TextField, Typography } from "@mui/material";
+import { FC, useState } from "react"
 import { CompanyDetail } from "../model/CompanyDetail";
 import { useForm } from "react-hook-form";
 import { StockExchange } from "../model/StockExchange";
 import { registerCompany } from "../service/CompanyService";
 import { AxiosError } from "axios";
-import { Link, useNavigate, useRoutes } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface CompanyForm {
     name: string,
@@ -18,6 +18,7 @@ interface CompanyForm {
 const AddCompanyView: FC = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<CompanyForm>();
+    const [showError, setShowError] = useState<Boolean>(false);
     const navigate = useNavigate();
 
     const onCompanySubmit = (data: CompanyForm) => {
@@ -36,7 +37,7 @@ const AddCompanyView: FC = () => {
             } catch (error) {
                 const axiosError = error as AxiosError;
                 console.error(axiosError.response?.data);
-                // TODO: show component with the message
+                setShowError(true);
             }
         }
 
@@ -56,6 +57,11 @@ const AddCompanyView: FC = () => {
                 </Box>
                 <Card>
                     <CardContent>
+                        {showError && (
+                            <Alert severity="error" onClose={() => setShowError(false)} sx={{ mb: 2 }}>
+                                An error has occurred registering the company, please try later.
+                            </Alert>
+                        )}
                         <Stack spacing={2} component="form" onSubmit={handleSubmit(onCompanySubmit)}>
                             <TextField variant="standard" label="Company Name"
                                 {...register("name", { required: { value: true, message: "Company name is required" } })}

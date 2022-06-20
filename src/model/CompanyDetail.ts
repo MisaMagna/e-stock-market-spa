@@ -5,5 +5,5 @@ export interface CompanyDetail {
     CEO: string,
     turnover: number,
     website: string,
-    exchanges: StockExchange[]
+    exchanges: string[]
 }

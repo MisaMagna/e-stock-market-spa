@@ -1,7 +1,11 @@
 import { Box, Button, Card, CardContent, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { FC } from "react"
-import { Controller, useForm } from "react-hook-form";
+import { CompanyDetail } from "../model/CompanyDetail";
+import { useForm } from "react-hook-form";
 import { StockExchange } from "../model/StockExchange";
+import { registerCompany } from "../service/CompanyService";
+import { AxiosError } from "axios";
+import { Link, useNavigate, useRoutes } from "react-router-dom";
 
 interface CompanyForm {
     name: string,
@@ -14,9 +18,30 @@ interface CompanyForm {
 const AddCompanyView: FC = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<CompanyForm>();
+    const navigate = useNavigate();
 
     const onCompanySubmit = (data: CompanyForm) => {
         console.log(data);
+        const fetchRegisterCompany = async () => {
+            const detail: CompanyDetail = {
+                name: data.name,
+                CEO: data.CEO,
+                turnover: Number(data.turnover),
+                website: data.website,
+                exchanges: [data.exchange]
+            };
+
+            try {
+                await registerCompany(detail);
+                navigate("/");
+            } catch (error) {
+                const axiosError = error as AxiosError;
+                console.error(axiosError.response?.data);
+                // TODO: show component with the message
+            }
+        }
+
+        fetchRegisterCompany();
     }
 
     const StockEchangeOptions = Object
@@ -45,7 +70,7 @@ const AddCompanyView: FC = () => {
                                 {...register("turnover", {
                                     required: { value: true, message: "Turnover is required" },
                                     pattern: { value: /^[0-9]*$/, message: "Turnover must be numeric" },
-                                    min: { value: 1, message: "Turnover must be greater than zero" }
+                                    min: { value: 10000000, message: "Turnover must be greater than 10.000.000" }
                                 })}
                                 error={Boolean(errors.turnover)} helperText={errors.turnover?.message}
                             />
@@ -64,7 +89,7 @@ const AddCompanyView: FC = () => {
                             </TextField>
                             <Stack direction="row" sx={{ justifyContent: "flex-end" }} >
                                 <Box sx={{ mt: 4 }}>
-                                    <Button>Cancel</Button>
+                                    <Button component={Link} to="/">Cancel</Button>
                                     <Button type="submit" variant="contained" sx={{ ml: 4 }}>Confirm</Button>
                                 </Box>
                             </Stack>

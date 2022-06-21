@@ -71,10 +71,9 @@ const AddCompanyView: FC = () => {
                                 {...register("CEO", { required: { value: true, message: "CEO name is required" } })}
                                 error={Boolean(errors.CEO)} helperText={errors.CEO?.message}
                             />
-                            <TextField variant="standard" label="Turnover (€)"
+                            <TextField type="number" variant="standard" label="Turnover (€)"
                                 {...register("turnover", {
                                     required: { value: true, message: "Turnover is required" },
-                                    pattern: { value: /^[0-9]*$/, message: "Turnover must be numeric" },
                                     min: { value: 10000000, message: "Turnover must be greater than 10.000.000" }
                                 })}
                                 error={Boolean(errors.turnover)} helperText={errors.turnover?.message}

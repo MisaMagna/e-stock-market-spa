@@ -41,8 +41,8 @@ const CompanyListView: FC = () => {
                 <Stack direction="row" sx={{ my: 3, justifyContent: "space-between", alignItems: "center" }}>
                     <Typography sx={{ fontSize: "h4.fontSize" }}>Companies</Typography>
                     <Box>
-                        <TextField inputRef={searchRef} type="search" size="small" label="Company id" />
-                        <Button variant="contained" onClick={onCompanySearch} sx={{ ml: 3, top: 1 }}>Search</Button>
+                        <TextField inputRef={searchRef} type="search" size="small" label="Company id" sx={{ mr: 3 }} />
+                        <Button variant="contained" onClick={onCompanySearch} sx={{ top: 1 }}>Search</Button>
                     </Box>
                 </Stack>
                 <Stack spacing={2}>

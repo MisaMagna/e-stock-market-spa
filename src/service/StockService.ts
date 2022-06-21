@@ -9,5 +9,5 @@ export const getCompanyStockByDateRange = (companyId: string, startDate: string,
 }
 
 export const addStock = (companyId: string, price: StockPrice) => {
-    return axios.post<void>(`${API}/add/${companyId}}`, price);
+    return axios.post<void>(`${API}/add/${companyId}`, price);
 }

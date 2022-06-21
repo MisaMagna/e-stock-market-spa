@@ -3,7 +3,8 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Stack, Tabl
 import { AxiosResponse } from "axios";
 import { FC, useEffect, useRef, useState } from "react";
 import { Stock } from "../model/Stock";
-import { getCompanyStockByDateRange } from "../service/StockService";
+import { StockPrice } from "../model/StockPrice";
+import { addStock, getCompanyStockByDateRange } from "../service/StockService";
 
 interface CompanyAccordionProps {
     companyCode: string,
@@ -26,6 +27,7 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
 
     const startDateRef = useRef<HTMLInputElement>(document.createElement("input"));
     const endDateRef = useRef<HTMLInputElement>(document.createElement("input"));
+    const stockPriceRef = useRef<HTMLInputElement>(document.createElement("input"));
 
     useEffect(() => {
         const FIRST_PRICE = currentStocks.length ? currentStocks[0].price : 0;
@@ -51,6 +53,19 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
         }
 
         fetchStocks();
+    }
+
+    const onAddCompanyStock = (companyCode: string) => {
+        const fetchAddCompanyStock = async () => {
+            const price: StockPrice = {
+                price: Number(stockPriceRef.current.value)
+            };
+            stockPriceRef.current.value = "";
+            await addStock(companyCode, price);
+            onDateChange(companyCode);
+        }
+
+        fetchAddCompanyStock();
     }
 
     const StockRow = (stock: Stock) => (
@@ -92,10 +107,16 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
                         <Button variant="contained" onClick={() => onDateChange(companyCode)}>Search</Button>
                     </Box>
                     {StocksTable(currentStocks)}
-                    <Stack spacing={2} sx={{ width: "25%" }}>
-                        <TextField value={metrics.min} label="Min" variant="filled" size="small" InputProps={{ readOnly: true }}></TextField>
-                        <TextField value={metrics.max} label="Max" variant="filled" size="small" InputProps={{ readOnly: true }}></TextField>
-                        <TextField value={metrics.average} label="Average" variant="filled" size="small" InputProps={{ readOnly: true }}></TextField>
+                    <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+                        <Stack spacing={2} sx={{ width: "25%" }}>
+                            <TextField value={metrics.min} label="Min" variant="filled" size="small" InputProps={{ readOnly: true }} />
+                            <TextField value={metrics.max} label="Max" variant="filled" size="small" InputProps={{ readOnly: true }} />
+                            <TextField value={metrics.average} label="Average" variant="filled" size="small" InputProps={{ readOnly: true }} />
+                        </Stack>
+                        <Box>
+                            <TextField inputRef={stockPriceRef} type="number" size="small" label="Company stock price" sx={{ mr: 3 }}></TextField>
+                            <Button variant="contained" onClick={() => onAddCompanyStock(companyCode)} sx={{ top: 1 }}>Add</Button>
+                        </Box>
                     </Stack>
                 </Stack>
             </AccordionDetails>

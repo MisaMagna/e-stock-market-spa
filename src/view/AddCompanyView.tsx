@@ -63,11 +63,11 @@ const AddCompanyView: FC = () => {
                             </Alert>
                         )}
                         <Stack spacing={2} component="form" onSubmit={handleSubmit(onCompanySubmit)}>
-                            <TextField variant="standard" label="Company Name"
+                            <TextField variant="standard" label="Company name"
                                 {...register("name", { required: { value: true, message: "Company name is required" } })}
                                 error={Boolean(errors.name)} helperText={errors.name?.message}
                             />
-                            <TextField variant="standard" label="CEO Name"
+                            <TextField variant="standard" label="CEO name"
                                 {...register("CEO", { required: { value: true, message: "CEO name is required" } })}
                                 error={Boolean(errors.CEO)} helperText={errors.CEO?.message}
                             />
@@ -86,7 +86,7 @@ const AddCompanyView: FC = () => {
                                 })}
                                 error={Boolean(errors.website)} helperText={errors.website?.message}
                             />
-                            <TextField select variant="standard" label="Stock Exchange" defaultValue=""
+                            <TextField select variant="standard" label="Stock exchange" defaultValue=""
                                 {...register("exchange", { required: { value: true, message: "Stock exchange is required" } })}
                                 error={Boolean(errors.exchange)} helperText={errors.exchange?.message}
                             >

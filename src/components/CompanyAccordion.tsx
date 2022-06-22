@@ -96,9 +96,11 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
     return (
         <Accordion>
             <AccordionSummary>
-                <Typography sx={{ pr: 4 }}>{companyCode}</Typography>
-                <Typography sx={{ fontStyle: "italic" }}>{companyName}</Typography>
+                <Typography sx={{ fontSize: "1.125rem", fontStyle: "italic" }}>{companyName}</Typography>
             </AccordionSummary>
+            <AccordionDetails sx={{ mb: 2 }}>
+                <Typography><strong>Code:</strong> {companyCode}</Typography>
+            </AccordionDetails>
             <AccordionDetails>
                 <Stack spacing={3}>
                     <Box>

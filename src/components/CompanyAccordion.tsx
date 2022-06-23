@@ -113,7 +113,7 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
                         <Stack spacing={2} sx={{ width: "25%" }}>
                             <TextField value={metrics.min} label="Min" variant="filled" size="small" InputProps={{ readOnly: true }} />
                             <TextField value={metrics.max} label="Max" variant="filled" size="small" InputProps={{ readOnly: true }} />
-                            <TextField value={metrics.average} label="Average" variant="filled" size="small" InputProps={{ readOnly: true }} />
+                            <TextField value={metrics.average.toFixed(2)} label="Average" variant="filled" size="small" InputProps={{ readOnly: true }} />
                         </Stack>
                         <Box>
                             <TextField inputRef={stockPriceRef} type="number" size="small" label="Company stock price" sx={{ mr: 3 }}></TextField>

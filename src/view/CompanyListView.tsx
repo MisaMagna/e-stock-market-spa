@@ -1,14 +1,16 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { FC, useEffect, useRef, useState } from "react";
 import { Company } from "../model/Company";
-import { AxiosError, AxiosResponse } from "axios";
-import { getCompanies, getCompany } from "../service/CompanyService";
+import { AxiosResponse } from "axios";
+import { getCompanies } from "../service/CompanyService";
 import CompanyAccordion from "../components/CompanyAccordion";
+import { useNavigate } from "react-router-dom";
 
 const CompanyListView: FC = () => {
 
     const [companies, setCompanies] = useState<Company[]>([]);
     const searchRef = useRef<HTMLInputElement>(document.createElement("input"));
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCompanies = async () => {
@@ -21,18 +23,8 @@ const CompanyListView: FC = () => {
 
 
     const onCompanySearch = () => {
-        const fetchCompany = async () => {
-            const companyCode: string = searchRef.current.value;
-            try {
-                const response: AxiosResponse<Company> = await getCompany(companyCode);
-                setCompanies([response.data]);
-            } catch (error) {
-                const axiosError = error as AxiosError;
-                console.error(axiosError.response?.data);
-            }
-        }
-
-        fetchCompany();
+        const companyCode: string = searchRef.current.value;
+        navigate(`/company/${companyCode}`);
     }
 
     return (

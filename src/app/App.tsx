@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import AddCompanyView from "../view/AddCompanyView";
 import CompanyListView from '../view/CompanyListView';
+import CompanyView from "../view/CompanyView";
 import './App.css';
 
 const App: FC = () => {
@@ -29,6 +30,7 @@ const App: FC = () => {
         {Layout(
           <Routes>
             <Route path="/" element={<CompanyListView />} />
+            <Route path="/company/:id" element={<CompanyView />} />
             <Route path="/add-company" element={<AddCompanyView />} />
           </Routes>
         )}

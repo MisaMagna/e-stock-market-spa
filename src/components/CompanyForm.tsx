@@ -1,4 +1,4 @@
-import { Alert, Box, Button, MenuItem, Stack, TextField } from "@mui/material";
+import { Alert, Box, Button, InputAdornment, MenuItem, Stack, TextField } from "@mui/material";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -27,6 +27,8 @@ const CompanyForm: FC<CompanyFormProps> = ({ onSubmit, showError = false, onAler
         .filter((key: string) => isNaN(Number(key)))
         .map((key: string) => <MenuItem key={key} value={key}>{key}</MenuItem>);
 
+    const euroAdornment = <InputAdornment position="end">€</InputAdornment>
+
     return (
         <>
             {showError && (
@@ -44,6 +46,7 @@ const CompanyForm: FC<CompanyFormProps> = ({ onSubmit, showError = false, onAler
                     error={Boolean(errors.CEO)} helperText={errors.CEO?.message}
                 />
                 <TextField type="number" variant="standard" label="Turnover (€)"
+                    InputProps={{ endAdornment: euroAdornment }}
                     {...register("turnover", {
                         required: { value: true, message: "Turnover is required" },
                         min: { value: 10000000, message: "Turnover must be greater than 10.000.000" }

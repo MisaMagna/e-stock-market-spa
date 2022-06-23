@@ -1,5 +1,5 @@
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, InputAdornment, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { FC, useEffect, useRef, useState } from "react";
 import { Stock } from "../model/Stock";
@@ -81,7 +81,7 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Stock Price</TableCell>
+                        <TableCell>Stock Price (€)</TableCell>
                         <TableCell>Date</TableCell>
                         <TableCell>Time</TableCell>
                     </TableRow>
@@ -92,6 +92,8 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
             </Table>
         </TableContainer>
     )
+
+    const euroAdornment = <InputAdornment position="end">€</InputAdornment>
 
     return (
         <Accordion>
@@ -111,12 +113,12 @@ const CompanyAccordion: FC<CompanyAccordionProps> = ({ companyCode, companyName,
                     {StocksTable(currentStocks)}
                     <Stack direction="row" sx={{ justifyContent: "space-between" }}>
                         <Stack spacing={2} sx={{ width: "25%" }}>
-                            <TextField value={metrics.min} label="Min" variant="filled" size="small" InputProps={{ readOnly: true }} />
-                            <TextField value={metrics.max} label="Max" variant="filled" size="small" InputProps={{ readOnly: true }} />
-                            <TextField value={metrics.average.toFixed(2)} label="Average" variant="filled" size="small" InputProps={{ readOnly: true }} />
+                            <TextField value={metrics.min} label="Min" variant="filled" size="small" InputProps={{ readOnly: true, endAdornment: euroAdornment }} />
+                            <TextField value={metrics.max} label="Max" variant="filled" size="small" InputProps={{ readOnly: true, endAdornment: euroAdornment }} />
+                            <TextField value={metrics.average.toFixed(2)} label="Average" variant="filled" size="small" InputProps={{ readOnly: true, endAdornment: euroAdornment }} />
                         </Stack>
                         <Box>
-                            <TextField inputRef={stockPriceRef} type="number" size="small" label="Company stock price" sx={{ mr: 3 }}></TextField>
+                            <TextField inputRef={stockPriceRef} type="number" size="small" label="Company stock price" InputProps={{ endAdornment: euroAdornment }} sx={{ mr: 3 }} />
                             <Button variant="contained" onClick={() => onAddCompanyStock(companyCode)} sx={{ top: 1 }}>Add</Button>
                         </Box>
                     </Stack>
